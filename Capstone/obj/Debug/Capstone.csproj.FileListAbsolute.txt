@@ -126,3 +126,5 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrat
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.ThirdMigration.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.AddedUserRoles.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.AddedUserRoleColumnToUsersTable.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.Addedclassforpaymentplan.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.UpdatedthePaymentPlanClass.resources

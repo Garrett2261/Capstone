@@ -36,6 +36,8 @@ namespace Capstone.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeSchedule> EmployeeSchedule { get; set; }
         public DbSet<Dog> Dogs { get; set; }
+        public DbSet<PaymentPlan> PaymentPlan { get; set; }
+
 
     }
 }
