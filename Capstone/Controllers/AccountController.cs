@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Capstone.Models;
+using Google.Apis.Gmail.v1;
+using Google.Apis.Gmail.v1.Data;
 
 namespace Capstone.Controllers
 {
@@ -422,6 +424,9 @@ namespace Capstone.Controllers
 
             base.Dispose(disposing);
         }
+
+        
+        
 
         #region Helpers
         // Used for XSRF protection when adding external logins

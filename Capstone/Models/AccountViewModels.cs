@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Google.Apis.Gmail.v1;
+using Google.Apis.Gmail.v1.Data;
+
 
 namespace Capstone.Models
 {
@@ -112,5 +116,23 @@ namespace Capstone.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class Email
+    {
+        
+        public static Message SendMessage(GmailService service, String emailAddress, Message email)
+        {
+            try
+            {
+                return service.Users.Messages.Send(email, emailAddress).Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: " + e.Message);
+            }
+
+            return null;
+        }
     }
 }

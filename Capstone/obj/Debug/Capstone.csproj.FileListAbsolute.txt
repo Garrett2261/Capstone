@@ -144,3 +144,4 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Core.pdb
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Core.xml
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Gmail.v1.pdb
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Gmail.v1.xml
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheaccountviewmodelclassandaddedahelpermethodformyGmailAPI.resources
