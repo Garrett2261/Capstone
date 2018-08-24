@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Charge";
+}
+
+<h2>Charge</h2>
+@using (Html.BeginForm("Charge", "Customer", FormMethod.Post))
+{
+<div class="row">
+    <div class="container col-md-2 col-md-offset-5">
+        <h5>Pay your amount</h5>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key ="pk_test_x1EIvxRrByOK7uejikQnhqt7"
+                data-amount="1000"
+                data-template-name="Capstone Project"
+                data-description ="Payment Plan"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-zip-code="true"
+                data-currency="dollar">
+
+        </script>
+                
+        
+    </div>
+</div>
+}
+
