@@ -61,6 +61,7 @@ namespace Capstone.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+            
         }
 
         //
@@ -81,7 +82,7 @@ namespace Capstone.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Create", "Customers");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -91,6 +92,7 @@ namespace Capstone.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+            
         }
 
         //

@@ -123,29 +123,5 @@ namespace Capstone.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult Charge()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Charge(string stripeToken, string stripeEmail)
-        {
-            var myCharge = new Stripe.StripeChargeCreateOptions();
-
-            myCharge.Amount = 1000;
-            myCharge.Currency = "dollar";
-
-            myCharge.ReceiptEmail = stripeEmail;
-            myCharge.Description = "Payment Charge";
-            myCharge.SourceTokenOrExistingSourceId = stripeToken;
-            myCharge.Capture = true;
-
-            var chargeService = new Stripe.StripeChargeService();
-            Stripe.StripeCharge stripeCharge = chargeService.Create(myCharge);
-
-            return View();
-        }
     }
 }
