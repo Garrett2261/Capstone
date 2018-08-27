@@ -263,6 +263,14 @@
     <Compile Include="Migrations\201808272302295_Edited the customer class and changed the phonenumer column from int to double, and then re added the controller, with the views.Designer.cs">
       <DependentUpon>201808272302295_Edited the customer class and changed the phonenumer column from int to double, and then re added the controller, with the views.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808272310220_Edited the customer model and changed the VetAddress column to VetHospitalName, and added a column VetHospitalAddress.cs" />
+    <Compile Include="Migrations\201808272310220_Edited the customer model and changed the VetAddress column to VetHospitalName, and added a column VetHospitalAddress.Designer.cs">
+      <DependentUpon>201808272310220_Edited the customer model and changed the VetAddress column to VetHospitalName, and added a column VetHospitalAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808272315030_Customer indexview didn%27t change so I deleted the customer view folder again along with the custmer controller, and then added both..cs" />
+    <Compile Include="Migrations\201808272315030_Customer indexview didn%27t change so I deleted the customer view folder again along with the custmer controller, and then added both..Designer.cs">
+      <DependentUpon>201808272315030_Customer indexview didn%27t change so I deleted the customer view folder again along with the custmer controller, and then added both..cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dog.cs" />
@@ -402,6 +410,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808272302295_Edited the customer class and changed the phonenumer column from int to double, and then re added the controller, with the views.resx">
       <DependentUpon>201808272302295_Edited the customer class and changed the phonenumer column from int to double, and then re added the controller, with the views.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808272310220_Edited the customer model and changed the VetAddress column to VetHospitalName, and added a column VetHospitalAddress.resx">
+      <DependentUpon>201808272310220_Edited the customer model and changed the VetAddress column to VetHospitalName, and added a column VetHospitalAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808272315030_Customer indexview didn%27t change so I deleted the customer view folder again along with the custmer controller, and then added both..resx">
+      <DependentUpon>201808272315030_Customer indexview didn%27t change so I deleted the customer view folder again along with the custmer controller, and then added both..cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

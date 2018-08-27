@@ -46,7 +46,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetAddress")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetAddress")] Customer customer)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress")] Customer customer)
         {
             if (ModelState.IsValid)
             {

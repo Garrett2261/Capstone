@@ -146,3 +146,5 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Gmail.v1.
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Google.Apis.Gmail.v1.xml
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheaccountviewmodelclassandaddedahelpermethodformyGmailAPI.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.Editedthecustomerclassandchangedthephonenumercolumnfrominttodoubleandthenreaddedthecontrollerwiththeviews.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedthecustomermodelandchangedtheVetAddresscolumntoVetHospitalNameandaddedacolumnVetHospitalAddress.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.CustomerindexviewdidntchangesoIdeletedthecustomerviewfolderagainalongwiththecustmercontrollerandthenaddedboth.resources

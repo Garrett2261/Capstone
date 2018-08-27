@@ -9,6 +9,9 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<p>
+    @Html.ActionLink("My Dog(s)", "Index", "Dogs")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -24,7 +27,10 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VetAddress)
+            @Html.DisplayNameFor(model => model.VetHospitalName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VetHospitalAddress)
         </th>
         <th></th>
     </tr>
@@ -44,7 +50,10 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.VetAddress)
+            @Html.DisplayFor(modelItem => item.VetHospitalName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VetHospitalAddress)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

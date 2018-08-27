@@ -14,6 +14,7 @@ namespace Capstone.Models
         public string LastName { get; set; }
         public double PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string VetAddress { get; set; }
+        public string VetHospitalName { get; set; }
+        public string VetHospitalAddress { get; set; }
     }
 }
