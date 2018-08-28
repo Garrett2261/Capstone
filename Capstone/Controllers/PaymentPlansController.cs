@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         // GET: PaymentPlans
         public ActionResult Index()
         {
-            return View(db.PaymentPlan.ToList());
+            return View();
         }
 
         // GET: PaymentPlans/Details/5
@@ -40,41 +40,30 @@ namespace Capstone.Controllers
 
         public ActionResult Charge()
         {
-            ViewBag.Message = "Learn how to process payments with Stripe";
-            return View(new PaymentPlan());
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Charge(PaymentPlan paymentPlan)
+        public ActionResult Charge(string stripeToken, string stripeEmail)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(paymentPlan);
-            }
+            var myCharge = new StripeChargeCreateOptions();
 
-            var chargeId = await ProcessPayment(paymentPlan);
-            return View("Index");
+            myCharge.Amount = 1000;
+            myCharge.Currency = "usd";
+
+            myCharge.ReceiptEmail = stripeEmail;
+            myCharge.Description = "Test Charge";
+            myCharge.SourceTokenOrExistingSourceId = stripeToken;
+            myCharge.Capture = true;
+
+            var chargeService = new StripeChargeService();
+            StripeCharge stripeCharge = chargeService.Create(myCharge);
+
+            return View();
         }
 
-        private async Task<string> ProcessPayment(PaymentPlan paymentPlan)
-        {
-            return await Task.Run(() =>
-            {
-                var myCharge = new StripeChargeCreateOptions
-                {
-                    Amount = (int)(paymentPlan.Amount * 100),
-                    Currency = "gbp",
-                    Description = "Description for charge",
-                    SourceTokenOrExistingSourceId = paymentPlan.Token
-                };
-
-                var chargeService = new StripeChargeService("your private key here");
-                var stripeCharge = chargeService.Create(myCharge);
-
-                return stripeCharge.Id;
-            });
-        }
+        
 
         // GET: PaymentPlans/Create
         public ActionResult Create()
