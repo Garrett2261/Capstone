@@ -148,3 +148,4 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrat
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.Editedthecustomerclassandchangedthephonenumercolumnfrominttodoubleandthenreaddedthecontrollerwiththeviews.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedthecustomermodelandchangedtheVetAddresscolumntoVetHospitalNameandaddedacolumnVetHospitalAddress.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.CustomerindexviewdidntchangesoIdeletedthecustomerviewfolderagainalongwiththecustmercontrollerandthenaddedboth.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedthePaymentPlanClassandchangedittoMyPickupsandaddedthecorrectinformationforit.resources
