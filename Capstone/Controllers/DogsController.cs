@@ -17,8 +17,20 @@ namespace Capstone.Controllers
         // GET: Dogs
         public ActionResult Index()
         {
-            var dogs = db.Dogs.Include(d => d.Customer);
-            return View(dogs.ToList());
+            List<Dog> dog = new List<Dog>();
+
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(d => d.UserName == currentUsername).Select(m => m.Id).First();
+            var currentCustomer = db.Customers.Where(d => d.ApplicationUserId == currentUser).First();
+            var dogIds= db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).Select(m => m.Id).ToList();
+             
+            foreach(int id in dogIds)
+            {
+                var currentDog = db.Dogs.Where(d => d.Id == id).First();
+                dog.Add(currentDog);
+            }
+
+            return View(dog);
         }
 
         // GET: Dogs/Details/5
@@ -39,8 +51,15 @@ namespace Capstone.Controllers
         // GET: Dogs/Create
         public ActionResult Create()
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "FirstName");
-            return View();
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).First();
+            var currentCustomer = db.Customers.Where(m => m.ApplicationUserId == currentUser).First();
+            int currentCustomerId = currentCustomer.Id;
+            Dog dog = new Dog();
+            dog.CustomerId = currentCustomerId;
+
+
+            return View(dog);
         }
 
         // POST: Dogs/Create

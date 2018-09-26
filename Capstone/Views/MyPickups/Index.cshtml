@@ -4,10 +4,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>My Pickups</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @Html.ActionLink("My Account", "Index", "Customers")
+</p>
+<p>
+    @Html.ActionLink("My Dog(s)", "Index", "Dogs")
 </p>
 <table class="table">
     <tr>

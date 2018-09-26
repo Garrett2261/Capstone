@@ -7,6 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Capstone.Models;
+using Google.Apis.Gmail.v1;
+using Google.Apis.Gmail.v1.Data;
+using RestSharp;
+using RestSharp.Authenticators;
+using Capstone.Properties;
 
 namespace Capstone.Controllers
 {
@@ -17,7 +22,18 @@ namespace Capstone.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            List<Customer> customer = new List<Customer>();
+
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
+            var customerIds = db.Customers.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).ToList();
+
+            foreach(int id in customerIds)
+            {
+                var currentCustomer = db.Customers.Where(m => m.Id == id).First();
+                customer.Add(currentCustomer);
+            }
+            return View(customer);
         }
 
         // GET: Customers/Details/5
@@ -38,7 +54,12 @@ namespace Capstone.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            return View();
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).First();
+            Customer customer = new Customer();
+            customer.ApplicationUserId = currentUser;
+
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -46,7 +67,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress, ApplicationUserId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +99,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress")] Customer customer)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,VetHospitalName,VetHospitalAddress, ApplicationUserId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -114,6 +135,36 @@ namespace Capstone.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Send()
+        {
+            return View();
+        }
+        
+
+        public static void SendEmail(string Subject, string To, string Body)
+        {
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3/sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages");
+            client.Authenticator = new HttpBasicAuthenticator("api", Settings.Default.ToString());
+            RestRequest request = new RestRequest();
+            //request.AddParameter("domain", "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org", ParameterType.UrlSegment);
+            request.Resource = "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages";
+            request.AddParameter("from", "PickerPupper<garrett052093@gmail.com>");
+            request.AddParameter("to", To);
+            request.AddParameter("subject", Subject);
+            request.AddParameter("text", Body);
+            request.Method = Method.POST;
+            client.Execute(request); 
+        }
+
+        
+            
+
+            
+            
+            
+            
+        
 
         protected override void Dispose(bool disposing)
         {

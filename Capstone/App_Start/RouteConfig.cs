@@ -14,6 +14,12 @@ namespace Capstone
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Send Email",
+                url: "Customers/{Subject, To, Body}",
+                defaults: new { controller = "Customers", action = "Send" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

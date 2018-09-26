@@ -14,8 +14,8 @@ namespace Capstone.Models
         public string Availability { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        [ForeignKey("EmployeeId")]
-        public Employee Employee { get; set; }
-        public int EmployeeId { get; set; }
+        //[ForeignKey("EmployeeId")]
+        //public Employee Employee { get; set; }
+        //public int EmployeeId { get; set; }
     }
 }

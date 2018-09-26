@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.ServiceModel.Channels;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Capstone.Models;
+using Google.Apis.Gmail.v1;
+using Google.Apis.Gmail.v1.Data;
 using Stripe;
 
 namespace Capstone.Controllers
@@ -56,7 +56,7 @@ namespace Capstone.Controllers
             {
                 db.MyPickups.Add(myPickups);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Charge");
             }
 
             ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name", myPickups.DogId);
@@ -141,11 +141,14 @@ namespace Capstone.Controllers
             myCharge.Capture = true;
 
             var chargeService = new StripeChargeService();
+            chargeService.ApiKey = "sk_test_ptTQd56xfvqKYtyYtux02X4j";
+
             StripeCharge stripeCharge = chargeService.Create(myCharge);
 
-            return View();
+            return RedirectToAction("Index");
         }
 
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
