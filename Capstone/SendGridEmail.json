@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "IncludesScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+
+  },
+  "SENDGRID_API_KEY":  ""
+}

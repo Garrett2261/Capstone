@@ -3,16 +3,25 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using Capstone.Models;
+using System.Web.Services.Description;
+using Microsoft.Extensions.DependencyInjection;
+using RestSharp;
+using System;
+using RestSharp.Authenticators;
+
 
 [assembly: OwinStartupAttribute(typeof(Capstone.Startup))]
 namespace Capstone
 {
     public partial class Startup
     {
+       
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
             CreateRoles();
+            
+            
         }
         public void CreateRoles()
         {
@@ -34,7 +43,13 @@ namespace Capstone
 
         
 
-        
+
+
+
+
+
+
+
     }
 
     

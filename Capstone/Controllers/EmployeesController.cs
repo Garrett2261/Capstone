@@ -38,6 +38,10 @@ namespace Capstone.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).First();
+            Employee employee = new Employee();
+            
             return View();
         }
 
@@ -46,7 +50,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email")] Employee employee)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,Availability,StartTime,EndTime")] Employee employee)
         {
             if (ModelState.IsValid)
             {

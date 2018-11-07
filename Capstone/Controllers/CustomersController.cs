@@ -13,11 +13,13 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Capstone.Properties;
 
+
 namespace Capstone.Controllers
 {
     public class CustomersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: Customers
         public ActionResult Index()
@@ -56,8 +58,10 @@ namespace Capstone.Controllers
         {
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).First();
-            Customer customer = new Customer();
-            customer.ApplicationUserId = currentUser;
+            Customer customer = new Customer
+            {
+                ApplicationUserId = currentUser
+            };
 
             return View(customer);
         }
@@ -135,36 +139,52 @@ namespace Capstone.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult Send()
-        {
-            return View();
-        }
+        //public ActionResult SendEmail()
+        //{
+        //    return View();
+        //}
+
+        //public ActionResult SendEmail()
+        //{
+
+        //}
+
+
+
+        //[HttpPost]
+        //public ActionResult SendEmail(string Subject, string To, string Body)
+        //{
+        //    RestClient client = new RestClient
+        //    {
+        //        BaseUrl = new Uri("https://api.mailgun.net/v3/sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages"),
+        //        Authenticator = new HttpBasicAuthenticator("api", Settings.Default.ToString())
+        //    };
+        //    RestRequest request = new RestRequest
+        //    {
+        //        //request.AddParameter("domain", "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org", ParameterType.UrlSegment);
+        //        Resource = "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages"
+        //    };
+        //    request.AddParameter("from", "Garrett Davis<garrett052093@gmail.com>");
+        //    request.AddParameter("to", To);
+        //    request.AddParameter("subject", Subject);
+        //    request.AddParameter("text", Body);
+        //    request.Method = Method.POST;
+        //    client.Execute(request);
+        //    return RedirectToAction("Index");
+        //}
+
         
 
-        public static void SendEmail(string Subject, string To, string Body)
-        {
-            RestClient client = new RestClient();
-            client.BaseUrl = new Uri("https://api.mailgun.net/v3/sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages");
-            client.Authenticator = new HttpBasicAuthenticator("api", Settings.Default.ToString());
-            RestRequest request = new RestRequest();
-            //request.AddParameter("domain", "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org", ParameterType.UrlSegment);
-            request.Resource = "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages";
-            request.AddParameter("from", "PickerPupper<garrett052093@gmail.com>");
-            request.AddParameter("to", To);
-            request.AddParameter("subject", Subject);
-            request.AddParameter("text", Body);
-            request.Method = Method.POST;
-            client.Execute(request); 
-        }
 
-        
-            
 
-            
-            
-            
-            
-        
+
+
+
+
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -5,5 +5,17 @@
     <Setting Name="APIKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">714c2e20d9350d382dde8e730b41d4e4-c1fe131e-ed99aa15</Value>
     </Setting>
+    <Setting Name="APIKey2" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AccountSID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">AC030ae757e8680b58f519acd3608610cf</Value>
+    </Setting>
+    <Setting Name="AuthToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">58b2d23f61967b1fd516bce867b4f4a4</Value>
+    </Setting>
+    <Setting Name="PhoneNumber" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">14148412850</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

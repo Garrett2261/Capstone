@@ -4,11 +4,29 @@
 }
 
 <h2>Send</h2>
-<h5>Send Email</h5>
+<div class="row">
+    <div class="container col-md-2 col-md-offset-5">
+        <h5>Send an email</h5>
+        <form action="/Customers/SendEmail" method="post">
+            @*<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_x1EIvxRrByOK7uejikQnhqt7"
+                    data-amount="1000"
+                    data-name="Picker Pupper"
+                    data-description="Pickup Charge"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-zip-code="true"
+                    data-currency="usd">
+
+            </script>*@
+        </form>
+    </div>
+</div>
+@*<h5>Send Email</h5>
 
 <form method="post" action="~/Customers/SendEmail">
     <input type="submit" value="Send Email"/>
-</form>
+</form>*@
 
 
 
