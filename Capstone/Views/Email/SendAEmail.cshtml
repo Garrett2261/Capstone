@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "SendAEmail";
+}
+
+<h2>SendAEmail</h2>
+@using (Html.BeginForm("SendAEmail", "Email", FormMethod.Post))
+{
+    <form>
+        <div>
+            @Html.TextBox("EmailSubject", "Subject", new { @class = "form-control" })
+            @Html.TextBox("EmailMessage", "Message", new { @class = "form-control" })
+            <input type="submit" id="submitId" value="SendEmail" />
+        </div>
+    </form>
+}
+

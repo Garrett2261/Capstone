@@ -17,8 +17,9 @@ namespace Capstone.Models
         public string Email { get; set; }
         public string VetHospitalName { get; set; }
         public string VetHospitalAddress { get; set; }
-        [ForeignKey("ApplicationUserId")]
-        public ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        
     }
 }

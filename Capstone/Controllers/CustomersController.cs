@@ -139,53 +139,6 @@ namespace Capstone.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        //public ActionResult SendEmail()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult SendEmail()
-        //{
-
-        //}
-
-
-
-        //[HttpPost]
-        //public ActionResult SendEmail(string Subject, string To, string Body)
-        //{
-        //    RestClient client = new RestClient
-        //    {
-        //        BaseUrl = new Uri("https://api.mailgun.net/v3/sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages"),
-        //        Authenticator = new HttpBasicAuthenticator("api", Settings.Default.ToString())
-        //    };
-        //    RestRequest request = new RestRequest
-        //    {
-        //        //request.AddParameter("domain", "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org", ParameterType.UrlSegment);
-        //        Resource = "sandboxb77e1ebbedbd44f2a4b62242f31805c9.mailgun.org/messages"
-        //    };
-        //    request.AddParameter("from", "Garrett Davis<garrett052093@gmail.com>");
-        //    request.AddParameter("to", To);
-        //    request.AddParameter("subject", Subject);
-        //    request.AddParameter("text", Body);
-        //    request.Method = Method.POST;
-        //    client.Execute(request);
-        //    return RedirectToAction("Index");
-        //}
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -83,15 +83,15 @@ namespace Capstone.Controllers
             {
                 case SignInStatus.Success:
                     ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
-                    if((UserManager.IsInRole(user.Id, "Customer")))
+                    if(user.UserRole == "Customer")
                     {
                         return RedirectToAction("Index", "Customers");
                     }
-                    if ((UserManager.IsInRole(user.Id, "Employee")))
+                    if(user.UserRole == "Employee")
                     {
                         return RedirectToAction("Index", "Employees");
                     }
-                    return View(model);
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -413,7 +413,6 @@ namespace Capstone.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
 

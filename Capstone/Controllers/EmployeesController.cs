@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Capstone.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Capstone.Controllers
 {
@@ -17,7 +18,18 @@ namespace Capstone.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            List<Employee> employee = new List<Employee>();
+
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
+            var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).ToList();
+
+            foreach (int id in employeeIds)
+            {
+                var currentEmployee = db.Employees.Where(m => m.Id == id).First();
+                employee.Add(currentEmployee);
+            }
+            return View(employee);
         }
 
         // GET: Employees/Details/5
@@ -40,9 +52,13 @@ namespace Capstone.Controllers
         {
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).First();
-            Employee employee = new Employee();
+            Employee employee = new Employee
+            {
+                ApplicationUserId = currentUser
+            };
+
             
-            return View();
+            return View(employee);
         }
 
         // POST: Employees/Create
@@ -50,7 +66,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,Availability,StartTime,EndTime")] Employee employee)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,Email,Availability,StartTime,EndTime,ApplicationUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {

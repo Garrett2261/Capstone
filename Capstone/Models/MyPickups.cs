@@ -11,11 +11,16 @@ namespace Capstone.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("DogId")]
-        public Dog Dog { get; set; }
+        [ForeignKey("Dog")]
         public int DogId { get; set; }
-        public DateTime DateTime { get; set; }
+        public Dog Dog { get; set; }
+        public string DayOfTheWeek { get; set; }
         public string Frequency { get; set; }
+        [ForeignKey("Employee")]
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+       
         
+
     }
 }

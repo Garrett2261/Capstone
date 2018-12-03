@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -8,6 +9,7 @@ using System.Web.Services.Description;
 using Capstone.Models;
 using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
+using Microsoft.AspNet.Identity;
 using Stripe;
 
 namespace Capstone.Controllers
@@ -19,8 +21,12 @@ namespace Capstone.Controllers
         // GET: MyPickups
         public ActionResult Index()
         {
-            var myPickups = db.MyPickups.Include(m => m.Dog);
-            return View(myPickups.ToList());
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
+            var currentCustomer = db.Customers.Where(c => c.ApplicationUserId == currentUser).FirstOrDefault();
+            var myDogs = db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).FirstOrDefault();
+            var myPickups = db.MyPickups.Where(m => m.DogId == myDogs.Id).Include(m => m.Dog).Include(e => e.Employee);
+            return View(myPickups.ToList());    
         }
 
         // GET: MyPickups/Details/5
@@ -41,6 +47,7 @@ namespace Capstone.Controllers
         // GET: MyPickups/Create
         public ActionResult Create()
         {
+
             ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name");
             return View();
         }
@@ -50,15 +57,80 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DogId,DateTime,Frequency")] MyPickups myPickups)
+        public ActionResult Create([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,EmployeeId")] MyPickups myPickups)
         {
-            if (ModelState.IsValid)
+            
+            if (myPickups.DayOfTheWeek == "Monday")
+            {
+                var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekdays.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Tuesday")
+            {
+                var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekdays.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Wednesday")
+            {
+                var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekdays.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Thursday")
+            {
+                var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekdays.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Friday")
+            {
+                var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekdays.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Saturday")
+            {
+                var employeeAvailabilityWeekends = db.Employees.Where(e => e.Availability == "Weekends").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekends.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekends[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            else if (myPickups.DayOfTheWeek == "Sunday")
+            {
+                var employeeAvailabilityWeekends = db.Employees.Where(e => e.Availability == "Weekends").Select(e => e).ToList();
+                int employeeCount = employeeAvailabilityWeekends.Count;
+                Random randomEmployee = new Random();
+                int employeeAtIndex = randomEmployee.Next(1, employeeCount);
+                var selectedEmployee = employeeAvailabilityWeekends[employeeAtIndex];
+                myPickups.EmployeeId = selectedEmployee.Id;
+            }
+            if (!ModelState.IsValid)
             {
                 db.MyPickups.Add(myPickups);
                 db.SaveChanges();
                 return RedirectToAction("Charge");
             }
-
+            
+            
             ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name", myPickups.DogId);
             return View(myPickups);
         }
@@ -84,7 +156,7 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DogId,DateTime,Frequency")] MyPickups myPickups)
+        public ActionResult Edit([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,EmployeeId")] MyPickups myPickups)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +217,9 @@ namespace Capstone.Controllers
 
             StripeCharge stripeCharge = chargeService.Create(myCharge);
 
-            return RedirectToAction("Index");
+            
+
+            return RedirectToAction("SendAEmail", "Email"); 
         }
 
         
