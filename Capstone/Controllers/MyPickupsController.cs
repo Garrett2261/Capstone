@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -21,12 +22,29 @@ namespace Capstone.Controllers
         // GET: MyPickups
         public ActionResult Index()
         {
+
+            List<MyPickups> pickups = new List<MyPickups>();
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var currentCustomer = db.Customers.Where(c => c.ApplicationUserId == currentUser).FirstOrDefault();
-            var myDogs = db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).FirstOrDefault();
-            var myPickups = db.MyPickups.Where(m => m.DogId == myDogs.Id).Include(m => m.Dog).Include(e => e.Employee);
-            return View(myPickups.ToList());    
+            var myDogs = db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).Select(d => d.Id).ToList();
+
+            foreach(int dog in myDogs)
+            {
+                var currentDog = db.Dogs.Where(d => d.Id == dog).Select(d => d.Id).FirstOrDefault();
+                var dogPickup = db.MyPickups.Where(m => m.DogId == currentDog).Include(m => m.Dog).Include(m => m.Employee).FirstOrDefault();
+                if(dogPickup != null)
+                {
+                    pickups.Add(dogPickup);
+                }
+                
+                
+            }
+
+            return View(pickups);
+
+
+
         }
 
         // GET: MyPickups/Details/5
@@ -154,19 +172,31 @@ namespace Capstone.Controllers
         // POST: MyPickups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,EmployeeId")] MyPickups myPickups)
+        public ActionResult EditPost(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Entry(myPickups).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name", myPickups.DogId);
-            return View(myPickups);
+            var pickupToUpdate = db.Customers.Find(id);
+            if (TryUpdateModel(pickupToUpdate, "",
+                new string[] { "DayOfTheWeek", "Frequency"}))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DataException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Please try again.");
+                }
+            }
+            return View(pickupToUpdate);
         }
+        
 
         // GET: MyPickups/Delete/5
         public ActionResult Delete(int? id)
@@ -219,7 +249,7 @@ namespace Capstone.Controllers
 
             
 
-            return RedirectToAction("SendAEmail", "Email"); 
+            return RedirectToAction("SendEmailToEmployee", "Email"); 
         }
 
         

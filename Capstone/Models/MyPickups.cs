@@ -15,6 +15,7 @@ namespace Capstone.Models
         public int DogId { get; set; }
         public Dog Dog { get; set; }
         public string DayOfTheWeek { get; set; }
+        public DateTime Time { get; set; }
         public string Frequency { get; set; }
         [ForeignKey("Employee")]
         public int EmployeeId { get; set; }

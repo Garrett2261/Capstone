@@ -1,0 +1,22 @@
+﻿@model Capstone.Models.EmailInformation
+@{
+    ViewBag.Title = "SendEmailToCustomer";
+}
+
+<h2>SendEmailToCustomer</h2>
+@using (Html.BeginForm("SendEmailToCustomer", "Email", FormMethod.Get))
+{
+    @Html.TextBoxFor(model => model.Subject)
+    @Html.TextBoxFor(model => model.Message)
+    <input type="submit" id="submitId" value="submit" onclick="alertMessage()" />
+}
+
+@Html.ActionLink("Index", "Index", "Employees")
+<script>
+    function alertMessage() {
+        alert("Email has been sent")
+    }
+</script>
+
+
+

@@ -1,0 +1,19 @@
+﻿@model Capstone.Models.TextInfo
+@{
+    ViewBag.Title = "VetNotification";
+}
+
+<h2>VetNotification</h2>
+
+@using (Html.BeginForm("VetNotification", "Notification", FormMethod.Get))
+{
+    @Html.TextBoxFor(model => model.Message)
+    <input type="submit" id="submitId" value="submit" onclick="alertMessage()" />
+}
+
+@Html.ActionLink("Index", "Index", "Employees")
+<script>
+    function alertMessage() {
+        alert("Text has been sent")
+    }
+</script>

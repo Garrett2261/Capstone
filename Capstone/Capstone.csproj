@@ -312,6 +312,7 @@
     <Compile Include="Models\MyPickups.cs" />
     <Compile Include="Extras\SendAnEmail.cs" />
     <Compile Include="Models\SendEmail.cs" />
+    <Compile Include="Models\TextInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -457,6 +458,12 @@
     <Content Include="Views\Notification\View.cshtml" />
     <Content Include="Views\Email\SendTheEmail.cshtml" />
     <Content Include="Views\Email\SendAEmail.cshtml" />
+    <Content Include="Views\Email\SendEmailToEmployee.cshtml" />
+    <Content Include="Views\Email\SendEmailToCustomer.cshtml" />
+    <Content Include="Views\Notification\PickupNotification.cshtml" />
+    <Content Include="Views\Notification\VetNotification.cshtml" />
+    <Content Include="Views\Notification\ReturnNotification.cshtml" />
+    <Content Include="Views\Notification\DroppedOffNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

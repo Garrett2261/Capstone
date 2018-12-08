@@ -17,98 +17,104 @@ namespace Capstone.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Notification
-        public ActionResult PickupNotification()
+        public ActionResult PickupNotification(TextInfo textMessage)
         {
             var accountSID = Settings.Default.AccountSID;
             var authToken = Settings.Default.AuthToken;
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var something = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var somethingElse = db.Dogs.Where(d => d.Id == something).Select(d => d.CustomerId).FirstOrDefault();
-            var jas = db.Customers.Where(c => c.Id == somethingElse).FirstOrDefault();
-            var lest = jas.PhoneNumber.ToString();
+            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
+            var customerphone = customer.PhoneNumber.ToString();
+            var text = textMessage.Message;
             TwilioClient.Init(accountSID, authToken);
 
-            var to = new PhoneNumber(lest);
+            var to = new PhoneNumber(customerphone);
             var from = new PhoneNumber("+14142690794");
 
             var message = MessageResource.Create(
                 to: to,
                 from: from,
-                body: "Your dog has been picked up. I am taking him to the vet now.");
+                body: "The employee has picked up your dog.");
+
+
 
             return RedirectToAction("Index", "Employees");
         }
 
-        public ActionResult VetNotification()
+        public ActionResult VetNotification(TextInfo textMessage)
         {
             var accountSID = Settings.Default.AccountSID;
             var authToken = Settings.Default.AuthToken;
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var something = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var somethingElse = db.Dogs.Where(d => d.Id == something).Select(d => d.CustomerId).FirstOrDefault();
-            var jas = db.Customers.Where(c => c.Id == somethingElse).FirstOrDefault();
-            var lest = jas.PhoneNumber.ToString();
+            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
+            var customerphone = customer.PhoneNumber.ToString();
+            var text = textMessage.Message;
             TwilioClient.Init(accountSID, authToken);
 
-            var to = new PhoneNumber(lest);
+            var to = new PhoneNumber(customerphone);
             var from = new PhoneNumber("+14142690794");
 
             var message = MessageResource.Create(
                 to: to,
                 from: from,
-                body: "Just got to the vet with your dog. The vet is now looking at your dog.");
+                body: "Your dog is now at the Vet.");
 
             return RedirectToAction("Index", "Employees");
         }
 
-        public ActionResult ReturnNotification()
+        public ActionResult ReturnNotification(TextInfo textMessage)
         {
             var accountSID = Settings.Default.AccountSID;
             var authToken = Settings.Default.AuthToken;
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var something = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var somethingElse = db.Dogs.Where(d => d.Id == something).Select(d => d.CustomerId).FirstOrDefault();
-            var jas = db.Customers.Where(c => c.Id == somethingElse).FirstOrDefault();
-            var lest = jas.PhoneNumber.ToString();
+            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
+            var customerphone = customer.PhoneNumber.ToString();
+            var text = textMessage.Message;
             TwilioClient.Init(accountSID, authToken);
 
-            var to = new PhoneNumber(lest);
+            var to = new PhoneNumber(customerphone);
             var from = new PhoneNumber("+14142690794");
 
             var message = MessageResource.Create(
                 to: to,
                 from: from,
-                body: "The visit is over now. Heading back home with your dog.");
+                body: "Heading back with your dog now");
 
             return RedirectToAction("Index", "Employees");
         }
 
-        public ActionResult DroppedOffNotification()
+        public ActionResult DroppedOffNotification(TextInfo textMessage)
         {
             var accountSID = Settings.Default.AccountSID;
             var authToken = Settings.Default.AuthToken;
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var something = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var somethingElse = db.Dogs.Where(d => d.Id == something).Select(d => d.CustomerId).FirstOrDefault();
-            var jas = db.Customers.Where(c => c.Id == somethingElse).FirstOrDefault();
-            var lest = jas.PhoneNumber.ToString();
+            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
+            var customerphone = customer.PhoneNumber.ToString();
+            var text = textMessage.Message;
             TwilioClient.Init(accountSID, authToken);
 
-            var to = new PhoneNumber(lest);
+            var to = new PhoneNumber(customerphone);
             var from = new PhoneNumber("+14142690794");
 
             var message = MessageResource.Create(
                 to: to,
                 from: from,
-                body: "Your dog is now home. I just dropped him off.");
+                body: "Just dropped off you dog. Thanks for choosing Picker Pupper.");
 
             return RedirectToAction("Index", "Employees");
         }

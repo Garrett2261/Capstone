@@ -1,0 +1,18 @@
+﻿@model Capstone.Models.TextInfo
+@{
+    ViewBag.Title = "ReturnNotification";
+}
+
+<h2>ReturnNotification</h2>
+@using (Html.BeginForm("ReturnNotification", "Notification", FormMethod.Get))
+{
+    @Html.TextBoxFor(model => model.Message)
+    <input type="submit" id="submitId" value="submit" onclick="alertMessage()" />
+}
+
+@Html.ActionLink("Index", "Index", "Employees")
+<script>
+    function alertMessage() {
+        alert("Text has been sent")
+    }
+</script>

@@ -1,15 +1,15 @@
 ﻿@model Capstone.Models.EmailInformation
 @{
-    ViewBag.Title = "SendTheEmail";
+    ViewBag.Title = "SendEmailToEmployee";
 }
 
 <h2>SendTheEmail</h2>
-@using (Html.BeginForm("SendTheEmail", "Email", FormMethod.Get))
+@using (Html.BeginForm("SendEmailToEmployee", "Email", FormMethod.Get))
 {
     @Html.TextBoxFor(model => model.Subject)
     @Html.TextBoxFor(model => model.Message)
     <input type="submit" id="submitId" value="submit" />
     
-}
+};
 
 
