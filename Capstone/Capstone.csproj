@@ -295,9 +295,9 @@
     <Compile Include="Migrations\201811152250307_Edited the MyPickups Model Class.Designer.cs">
       <DependentUpon>201811152250307_Edited the MyPickups Model Class.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811282143537_Added CustomerId column to MyPickups table.cs" />
-    <Compile Include="Migrations\201811282143537_Added CustomerId column to MyPickups table.Designer.cs">
-      <DependentUpon>201811282143537_Added CustomerId column to MyPickups table.cs</DependentUpon>
+    <Compile Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs" />
+    <Compile Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.Designer.cs">
+      <DependentUpon>201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -428,12 +428,6 @@
     <Content Include="Views\Dogs\Details.cshtml" />
     <Content Include="Views\Dogs\Edit.cshtml" />
     <Content Include="Views\Dogs\Index.cshtml" />
-    <Content Include="Views\MyPickups\Create.cshtml" />
-    <Content Include="Views\MyPickups\Delete.cshtml" />
-    <Content Include="Views\MyPickups\Details.cshtml" />
-    <Content Include="Views\MyPickups\Edit.cshtml" />
-    <Content Include="Views\MyPickups\Index.cshtml" />
-    <Content Include="Views\MyPickups\Charge.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
@@ -464,6 +458,12 @@
     <Content Include="Views\Notification\VetNotification.cshtml" />
     <Content Include="Views\Notification\ReturnNotification.cshtml" />
     <Content Include="Views\Notification\DroppedOffNotification.cshtml" />
+    <Content Include="Views\MyPickups\Create.cshtml" />
+    <Content Include="Views\MyPickups\Delete.cshtml" />
+    <Content Include="Views\MyPickups\Details.cshtml" />
+    <Content Include="Views\MyPickups\Edit.cshtml" />
+    <Content Include="Views\MyPickups\Index.cshtml" />
+    <Content Include="Views\MyPickups\Charge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -524,8 +524,8 @@
     <EmbeddedResource Include="Migrations\201811152250307_Edited the MyPickups Model Class.resx">
       <DependentUpon>201811152250307_Edited the MyPickups Model Class.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811282143537_Added CustomerId column to MyPickups table.resx">
-      <DependentUpon>201811282143537_Added CustomerId column to MyPickups table.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.resx">
+      <DependentUpon>201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

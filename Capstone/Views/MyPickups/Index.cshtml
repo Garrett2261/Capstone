@@ -15,16 +15,14 @@
 <p>
     @Html.ActionLink("My Dog(s)", "Index", "Dogs")
 </p>
-<p>
-    @Html.ActionLink("Send Email", "Send", "Email")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.FirstName)
+            @Html.DisplayNameFor(model => model.Dog.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Dog.Name)
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DayOfTheWeek)
@@ -32,16 +30,19 @@
         <th>
             @Html.DisplayNameFor(model => model.Frequency)
         </th>
-
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Employee.FirstName)
+            @Html.DisplayFor(modelItem => item.Dog.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Dog.Name)
+            @Html.DisplayFor(modelItem => item.Employee.FirstName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DayOfTheWeek)
@@ -50,9 +51,12 @@
             @Html.DisplayFor(modelItem => item.Frequency)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

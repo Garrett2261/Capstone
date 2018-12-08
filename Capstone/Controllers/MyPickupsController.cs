@@ -29,16 +29,16 @@ namespace Capstone.Controllers
             var currentCustomer = db.Customers.Where(c => c.ApplicationUserId == currentUser).FirstOrDefault();
             var myDogs = db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).Select(d => d.Id).ToList();
 
-            foreach(int dog in myDogs)
+            foreach (int dog in myDogs)
             {
                 var currentDog = db.Dogs.Where(d => d.Id == dog).Select(d => d.Id).FirstOrDefault();
                 var dogPickup = db.MyPickups.Where(m => m.DogId == currentDog).Include(m => m.Dog).Include(m => m.Employee).FirstOrDefault();
-                if(dogPickup != null)
+                if (dogPickup != null)
                 {
                     pickups.Add(dogPickup);
                 }
-                
-                
+
+
             }
 
             return View(pickups);
@@ -75,9 +75,10 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,EmployeeId")] MyPickups myPickups)
+        public ActionResult Create([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,Time,EmployeeId")] MyPickups myPickups)
         {
             
+
             if (myPickups.DayOfTheWeek == "Monday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
@@ -147,8 +148,8 @@ namespace Capstone.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Charge");
             }
-            
-            
+
+
             ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name", myPickups.DogId);
             return View(myPickups);
         }
@@ -182,7 +183,7 @@ namespace Capstone.Controllers
             }
             var pickupToUpdate = db.Customers.Find(id);
             if (TryUpdateModel(pickupToUpdate, "",
-                new string[] { "DayOfTheWeek", "Frequency"}))
+                new string[] { "DayOfTheWeek", "Frequency" }))
             {
                 try
                 {
@@ -196,7 +197,7 @@ namespace Capstone.Controllers
             }
             return View(pickupToUpdate);
         }
-        
+
 
         // GET: MyPickups/Delete/5
         public ActionResult Delete(int? id)
@@ -247,12 +248,12 @@ namespace Capstone.Controllers
 
             StripeCharge stripeCharge = chargeService.Create(myCharge);
 
-            
 
-            return RedirectToAction("SendEmailToEmployee", "Email"); 
+
+            return RedirectToAction("SendEmailToEmployee", "Email");
         }
 
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

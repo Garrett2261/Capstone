@@ -279,5 +279,5 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrat
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheMyPickupsModelClass.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\bin\Extras\credentials.json
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.csprojAssemblyReference.cache
-C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.AddedCustomerIdcolumntoMyPickupstable.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.dll.config
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheMyPickupsmodelandaddedaTimepropertythatusestheDateTimeclass.resources
