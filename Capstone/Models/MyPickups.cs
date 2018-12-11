@@ -14,14 +14,13 @@ namespace Capstone.Models
         [ForeignKey("Dog")]
         public int DogId { get; set; }
         public Dog Dog { get; set; }
-        public string DayOfTheWeek { get; set; }
         public string Frequency { get; set; }
         public DateTime Time { get; set; }
         [ForeignKey("Employee")]
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-       
-        
+
+
 
     }
 }

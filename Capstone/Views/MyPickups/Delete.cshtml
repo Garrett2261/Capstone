@@ -28,14 +28,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DayOfTheWeek)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DayOfTheWeek)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Frequency)
         </dt>
 
@@ -53,7 +45,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

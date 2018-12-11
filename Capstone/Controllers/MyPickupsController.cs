@@ -75,11 +75,11 @@ namespace Capstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DogId,DayOfTheWeek,Frequency,Time,EmployeeId")] MyPickups myPickups)
+        public ActionResult Create([Bind(Include = "Id,DogId,Frequency,Time,EmployeeId")] MyPickups myPickups)
         {
-            
 
-            if (myPickups.DayOfTheWeek == "Monday")
+
+            if (myPickups.Time.DayOfWeek.ToString() == "Monday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekdays.Count;
@@ -88,7 +88,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Tuesday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Tuesday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekdays.Count;
@@ -97,7 +97,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Wednesday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Wednesday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekdays.Count;
@@ -106,7 +106,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Thursday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Thursday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekdays.Count;
@@ -115,7 +115,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Friday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Friday")
             {
                 var employeeAvailabilityWeekdays = db.Employees.Where(e => e.Availability == "Weekdays").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekdays.Count;
@@ -124,7 +124,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekdays[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Saturday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Saturday")
             {
                 var employeeAvailabilityWeekends = db.Employees.Where(e => e.Availability == "Weekends").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekends.Count;
@@ -133,7 +133,7 @@ namespace Capstone.Controllers
                 var selectedEmployee = employeeAvailabilityWeekends[employeeAtIndex];
                 myPickups.EmployeeId = selectedEmployee.Id;
             }
-            else if (myPickups.DayOfTheWeek == "Sunday")
+            else if (myPickups.Time.DayOfWeek.ToString() == "Sunday")
             {
                 var employeeAvailabilityWeekends = db.Employees.Where(e => e.Availability == "Weekends").Select(e => e).ToList();
                 int employeeCount = employeeAvailabilityWeekends.Count;
@@ -183,7 +183,7 @@ namespace Capstone.Controllers
             }
             var pickupToUpdate = db.Customers.Find(id);
             if (TryUpdateModel(pickupToUpdate, "",
-                new string[] { "DayOfTheWeek", "Frequency" }))
+                new string[] { "Frequency" }))
             {
                 try
                 {
@@ -250,7 +250,7 @@ namespace Capstone.Controllers
 
 
 
-            return RedirectToAction("SendEmailToEmployee", "Email");
+            return RedirectToAction("ConfirmationEmail", "Email");
         }
 
 

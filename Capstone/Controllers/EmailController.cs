@@ -10,6 +10,7 @@ using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 using RestSharp;
 using System.Web.UI.WebControls;
+using System.Runtime.Serialization;
 
 namespace Capstone.Controllers
 {
@@ -20,29 +21,26 @@ namespace Capstone.Controllers
         {
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
-            var customer = db.Customers.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var customerDog = db.Dogs.Where(d => d.CustomerId == customer).Select(d => d.Id).FirstOrDefault();
-            var dog = db.MyPickups.Where(m => m.DogId == customerDog).Select(m => m.EmployeeId).FirstOrDefault();
-            var employee = db.Employees.Where(e => e.Id == dog).FirstOrDefault();
-            var employeeEmail = employee.Email.ToString();
-            var employeeFirstName = employee.FirstName.ToString();
-            var employeeLastName = employee.LastName.ToString();
-
-            var currentCustomer = db.Customers.Where(m => m.ApplicationUserId == currentUser).FirstOrDefault();
-            var currentCustomerEmail = currentCustomer.Email;
-            var currentCustomerFirstName = currentCustomer.FirstName;
-            var currentCustomerLastName = currentCustomer.LastName;
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-            var client = new SendGridClient(apiKey);
+            var currentCustomer = db.Customers.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
+            var dogPickup = db.MyPickups.Where(m => m.Dog.CustomerId == currentCustomer).Where(m => m.DogId == m.Dog.Id).OrderByDescending(m => m.Id).First();
+            var employeeEmail = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.Email).FirstOrDefault();
+            var employeeFirstName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.FirstName).FirstOrDefault();
+            var employeeLastName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.LastName).FirstOrDefault();
+            var currentCustomerLoggedIn = db.Customers.Where(m => m.ApplicationUserId == currentUser).FirstOrDefault();
+            var currentCustomerEmail = currentCustomerLoggedIn.Email;
+            var currentCustomerFirstName = currentCustomerLoggedIn.FirstName;
+            var currentCustomerLastName = currentCustomerLoggedIn.LastName;
             var subject = emailInformation.Subject;
             var message = emailInformation.Message;
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + currentCustomerLastName)),
                 Subject = subject,
                 PlainTextContent = "Elmwood is the best place in the world to me",
                 HtmlContent = message
-
             };
             msg.AddTo(new EmailAddress(employeeEmail, (employeeFirstName + employeeLastName)));
             var response = await client.SendEmailAsync(msg);
@@ -84,35 +82,38 @@ namespace Capstone.Controllers
 
         public async Task<ActionResult> ConfirmationEmail()
         {
+            var loggedInCurrentUsername = User.Identity.Name;
+            var loggedInCurrentUser = db.Users.Where(m => m.UserName == loggedInCurrentUsername).Select(m => m.Id).FirstOrDefault();
+            var loggedInCurrentCustomer = db.Customers.Where(m => m.ApplicationUserId == loggedInCurrentUser).Select(m => m.Id).FirstOrDefault();
+            var dogPickup = db.MyPickups.Where(m => m.Dog.CustomerId == loggedInCurrentCustomer).Where(m => m.DogId == m.Dog.Id).OrderByDescending(m => m.Id).First();
+            var dogName = db.Dogs.Where(d => d.Id == dogPickup.DogId).Select(d => d.Name).First();
+            var pickupDayOfTheWeek = db.MyPickups.Where(m => m.Id == dogPickup.Id).Select(m => m.Time).First();
+            var pickupTime = pickupDayOfTheWeek.ToLongDateString();
+            var pickupEmployeeFirstName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.FirstName).First();
+            var pickupEmployeeLastName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.LastName).First();
+
+
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
-            var customer = db.Customers.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var customerDog = db.Dogs.Where(d => d.CustomerId == customer).Select(d => d.Id).FirstOrDefault();
-            var dog = db.MyPickups.Where(m => m.DogId == customerDog).Select(m => m.EmployeeId).FirstOrDefault();
-            var employee = db.Employees.Where(e => e.Id == dog).FirstOrDefault();
-            var employeeEmail = employee.Email.ToString();
-            var employeeFirstName = employee.FirstName.ToString();
-            var employeeLastName = employee.LastName.ToString();
-
             var currentCustomer = db.Customers.Where(m => m.ApplicationUserId == currentUser).FirstOrDefault();
-            var currentCustomerEmail = currentCustomer.Email;
-            var currentCustomerFirstName = currentCustomer.FirstName;
-            var currentCustomerLastName = currentCustomer.LastName;
+            var currentCustomerEmail = currentCustomer.Email.ToString();
+            var currentCustomerFirstName = currentCustomer.FirstName.ToString();
+            var currentCustomerLastName = currentCustomer.LastName.ToString();
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var subject = "Your Pickup";
-            //var message = ("Thank you for choosing Picker Pupper. Your dog will be picked up on" + object from mypickups database that gets the day of the week + "at" + Time from mypickups database record + ". Thank you choosing Picker Pupper. The application where we'll pick up your pupper and send he or she to the vet.");
+            var message = "Your Pickup has been added. Your dog, " + dogName + ", will be picked up on" + pickupTime + "by" + pickupEmployeeFirstName + pickupEmployeeLastName + ". Thank you for choosing Picker Pupper and we hope you choose us again!";
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + currentCustomerLastName)),
+                From = new EmailAddress("PickerPupper@dogs.com"),
                 Subject = subject,
                 PlainTextContent = "Elmwood is the best place in the world to me",
-                HtmlContent = "message"
+                HtmlContent = message
 
             };
-            msg.AddTo(new EmailAddress(employeeEmail, (employeeFirstName + employeeLastName)));
+            msg.AddTo(new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + currentCustomerLastName)));
             var response = await client.SendEmailAsync(msg);
-            return View();
+            return RedirectToAction("SendEmailToEmployee", "Email");
         }
     }
 }

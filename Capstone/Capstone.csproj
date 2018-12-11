@@ -137,6 +137,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
       <Private>True</Private>
@@ -298,6 +299,10 @@
     <Compile Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs" />
     <Compile Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.Designer.cs">
       <DependentUpon>201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812082104263_Edited the MyPickups class but kept the Time property which I kept and got rid of the DayOfTheWeek property.cs" />
+    <Compile Include="Migrations\201812082104263_Edited the MyPickups class but kept the Time property which I kept and got rid of the DayOfTheWeek property.Designer.cs">
+      <DependentUpon>201812082104263_Edited the MyPickups class but kept the Time property which I kept and got rid of the DayOfTheWeek property.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -526,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.resx">
       <DependentUpon>201812081954153_Edited the MyPickups model and added a Time property that uses the DateTime class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812082104263_Edited the MyPickups class but kept the Time property which I kept and got rid of the DayOfTheWeek property.resx">
+      <DependentUpon>201812082104263_Edited the MyPickups class but kept the Time property which I kept and got rid of the DayOfTheWeek property.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -9,5 +9,6 @@ namespace Capstone.Models
     {
         public string Subject { get; set; }
         public string Message { get; set; }
+        public string ToAddress { get; set; }
     }
 }
