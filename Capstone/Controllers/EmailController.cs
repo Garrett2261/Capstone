@@ -37,7 +37,7 @@ namespace Capstone.Controllers
             
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + currentCustomerLastName)),
+                From = new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + "" + currentCustomerLastName)),
                 Subject = subject,
                 PlainTextContent = "Elmwood is the best place in the world to me",
                 HtmlContent = message
@@ -69,7 +69,7 @@ namespace Capstone.Controllers
             var message = emailInformation.Message;
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress(currentEmployeeEmail, (currentEmployeeFirstName + currentEmployeeLastName)),
+                From = new EmailAddress(currentEmployeeEmail, (currentEmployeeFirstName + "" + currentEmployeeLastName)),
                 Subject = subject,
                 PlainTextContent = "Elmwood is the best place in the world to me",
                 HtmlContent = message
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var subject = "Your Pickup";
-            var message = "Your Pickup has been added. Your dog, " + dogName + ", will be picked up on" + pickupTime + "by" + pickupEmployeeFirstName + pickupEmployeeLastName + ". Thank you for choosing Picker Pupper and we hope you choose us again!";
+            var message = "Your Pickup has been added. Your dog, " + dogName + ", will be picked up on " + pickupTime + " by " + pickupEmployeeFirstName + "" + pickupEmployeeLastName + ". Thank you for choosing Picker Pupper and we hope you choose us again!";
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("PickerPupper@dogs.com"),
@@ -114,6 +114,49 @@ namespace Capstone.Controllers
             msg.AddTo(new EmailAddress(currentCustomerEmail, (currentCustomerFirstName + currentCustomerLastName)));
             var response = await client.SendEmailAsync(msg);
             return RedirectToAction("SendEmailToEmployee", "Email");
+        }
+
+        public async Task<ActionResult> PickupInformationEmail()
+        {
+            var loggedInCurrentUsername = User.Identity.Name;
+            var loggedInCurrentUser = db.Users.Where(m => m.UserName == loggedInCurrentUsername).Select(m => m.Id).FirstOrDefault();
+            var loggedInCurrentCustomer = db.Customers.Where(m => m.ApplicationUserId == loggedInCurrentUser).Select(m => m.Id).FirstOrDefault();
+            var dogPickup = db.MyPickups.Where(m => m.Dog.CustomerId == loggedInCurrentCustomer).Where(m => m.DogId == m.Dog.Id).OrderByDescending(m => m.Id).First();
+            var dogName = db.Dogs.Where(d => d.Id == dogPickup.DogId).Select(d => d.Name).First();
+            var pickupDayOfTheWeek = db.MyPickups.Where(m => m.Id == dogPickup.Id).Select(m => m.Time).First();
+            var pickupDate = pickupDayOfTheWeek.ToLongDateString();
+            var pickupTime = pickupDayOfTheWeek.ToShortTimeString();
+            var pickupEmployeeEmail = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.Email).First();
+            var pickupEmployeeFirstName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.FirstName).First();
+            var pickupEmployeeLastName = db.Employees.Where(e => e.Id == dogPickup.EmployeeId).Select(e => e.LastName).First();
+
+
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
+            var currentCustomer = db.Customers.Where(m => m.ApplicationUserId == currentUser).FirstOrDefault();
+            var vetHospital = currentCustomer.VetHospitalName;
+            var vetHospitalAddress = currentCustomer.VetHospitalAddress;
+            var currentCustomerDog = db.Dogs.Where(d => d.CustomerId == currentCustomer.Id).OrderByDescending(m => m.Id).First();
+            var currentDogName = db.Dogs.Where(d => d.Id == currentCustomerDog.Id).Select(d => d.Name).First();
+            var currentDogSize = db.Dogs.Where(d => d.Id == currentCustomerDog.Id).Select(d => d.Size).First();
+            var currentDogBreed = db.Dogs.Where(d => d.Id == currentCustomerDog.Id).Select(d => d.Breed).First();
+            var currentCustomerFirstName = currentCustomer.FirstName.ToString();
+            var currentCustomerLastName = currentCustomer.LastName.ToString();
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var subject = "You have a pickup";
+            var message = "You have been assigned a Pickup. You will be picking up the dog of " + currentCustomerFirstName + "" + currentCustomerLastName + " . Their dog is a" + "" + currentDogSize + currentDogBreed + " named" + "" + currentDogName + " . The pick up time for " + currentDogName + " is " + pickupDate + "" + "at" + pickupTime + ". The hospital is" + vetHospital + "and it is located at" + vetHospitalAddress;
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("PickerPupper@dogs.com"),
+                Subject = subject,
+                PlainTextContent = "Elmwood is the best place in the world to me",
+                HtmlContent = message
+
+            };
+            msg.AddTo(new EmailAddress(pickupEmployeeEmail, (pickupEmployeeFirstName + pickupEmployeeLastName)));
+            var response = await client.SendEmailAsync(msg);
+            return RedirectToAction("ConfirmationEmail", "Email");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web.UI.WebControls;
 using System.ServiceModel.Channels;
 using System.Web.Mvc;
 using System.Web.Services.Description;
@@ -18,6 +19,7 @@ namespace Capstone.Controllers
     public class MyPickupsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly object calendar;
 
         // GET: MyPickups
         public ActionResult Index()
@@ -65,8 +67,12 @@ namespace Capstone.Controllers
         // GET: MyPickups/Create
         public ActionResult Create()
         {
-
-            ViewBag.DogId = new SelectList(db.Dogs, "Id", "Name");
+            var currentUsername = User.Identity.Name;
+            var currentUser = db.Users.Where(d => d.UserName == currentUsername).Select(m => m.Id).First();
+            var currentCustomer = db.Customers.Where(d => d.ApplicationUserId == currentUser).First();
+            ViewBag.DogId = new SelectList(db.Dogs.Where(d => d.CustomerId == currentCustomer.Id), "Id", "Name");
+            Calendar calendar = new Calendar();
+            
             return View();
         }
 
@@ -235,7 +241,7 @@ namespace Capstone.Controllers
         {
             var myCharge = new StripeChargeCreateOptions();
 
-            myCharge.Amount = 1000;
+            myCharge.Amount = 2000;
             myCharge.Currency = "usd";
 
             myCharge.ReceiptEmail = stripeEmail;
@@ -250,7 +256,7 @@ namespace Capstone.Controllers
 
 
 
-            return RedirectToAction("ConfirmationEmail", "Email");
+            return RedirectToAction("PickupInformationEmail", "Email");
         }
 
 
