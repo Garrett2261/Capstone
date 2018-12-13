@@ -282,3 +282,6 @@ C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.csproj
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.dll.config
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheMyPickupsmodelandaddedaTimepropertythatusestheDateTimeclass.resources
 C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheMyPickupsclassbutkepttheTimepropertywhichIkeptandgotridoftheDayOfTheWeekproperty.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.UpdatedtheDateTimepropertyinmyMyPickupclasssothatwhenausercreatesapickupthedatetimeformatwillshowup.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheDateTimepropertyinMyPickupclassandaddedadatatypeofdatetimetothatproperty.resources
+C:\Users\Garrett\Desktop\C# Projects\Capstone\Capstone\obj\Debug\Capstone.Migrations.EditedtheMyPickupclassagain.resources

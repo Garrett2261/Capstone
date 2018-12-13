@@ -4,29 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>My Dog(s)</h2>
+<h1 class="text-center">My Dog(s)</h1>
 
 <p>
     @Html.ActionLink("Add Dog", "Create")
 </p>
-<p>
-    @Html.ActionLink("My Account", "Index", "Customers")
-</p>
-<p>
-    @Html.ActionLink("My Pickups", "Index", "MyPickups")
-</p>
-<table class="table">
+
+<table class="table table-hover table-bordered">
     <tr>
-        <th>
+        <th class="text-center">
            @Html.DisplayNameFor(model => model.Customer.FirstName)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Breed)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Size)
         </th>
         <th></th>
@@ -34,16 +29,16 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Customer.FirstName)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Breed)
         </td>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Size)
         </td>
         <td>
