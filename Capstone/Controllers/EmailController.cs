@@ -52,8 +52,8 @@ namespace Capstone.Controllers
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employee = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var dogPickup = db.MyPickups.Where(m => m.EmployeeId == employee).Select(m => m.DogId).FirstOrDefault();
-            var dogOwner = db.Dogs.Where(d => d.Id == dogPickup).Select(d => d.CustomerId).FirstOrDefault();
+            var dogPickup = db.MyPickups.Where(m => m.EmployeeId == employee).OrderByDescending(m => m.Id).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == dogPickup.DogId).Select(d => d.CustomerId).FirstOrDefault();
             var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
             var customerEmail = customer.Email;
             var customerFirstName = customer.FirstName;
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var subject = "Your Pickup";
-            var message = "Your Pickup has been added. Your dog, " + dogName + ", will be picked up on " + pickupTime + " by " + pickupEmployeeFirstName + "" + pickupEmployeeLastName + ". Thank you for choosing Picker Pupper and we hope you choose us again!";
+            var message = "Your Pickup has been added. Your dog, " + dogName + ", will be picked up on " + pickupTime + " by " + pickupEmployeeFirstName + " " + pickupEmployeeLastName + ". Thank you for choosing Picker Pupper and we hope you choose us again!";
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("PickerPupper@dogs.com"),
@@ -145,7 +145,7 @@ namespace Capstone.Controllers
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var subject = "You have a pickup";
-            var message = "You have been assigned a Pickup. You will be picking up the dog of " + currentCustomerFirstName + "" + currentCustomerLastName + " . Their dog is a" + "" + currentDogSize + currentDogBreed + " named" + "" + currentDogName + " . The pick up time for " + currentDogName + " is " + pickupDate + "" + "at" + pickupTime + ". The hospital is" + vetHospital + "and it is located at" + vetHospitalAddress;
+            var message = "You have been assigned a Pickup. You will be picking up the dog of " + currentCustomerFirstName + " " + currentCustomerLastName + " . Their dog is a " + " " + currentDogSize + currentDogBreed + " named " + " " + currentDogName + " . The pick up time for " + currentDogName + " is " + pickupDate + "" + "at" + pickupTime + ". The hospital is" + vetHospital + "and it is located at" + vetHospitalAddress;
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("PickerPupper@dogs.com"),

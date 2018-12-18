@@ -24,8 +24,8 @@ namespace Capstone.Controllers
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var pickupDog = db.MyPickups.Where(m => m.EmployeeId == employeeIds).OrderByDescending(m => m.Id).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == pickupDog.DogId).Select(d => d.CustomerId).FirstOrDefault();
             var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
             var customerphone = customer.PhoneNumber.ToString();
             var text = textMessage.Message;
@@ -51,8 +51,8 @@ namespace Capstone.Controllers
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var pickupDog = db.MyPickups.Where(m => m.EmployeeId == employeeIds).OrderByDescending(m => m.Id).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == pickupDog.DogId).Select(d => d.CustomerId).FirstOrDefault();
             var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
             var customerphone = customer.PhoneNumber.ToString();
             var text = textMessage.Message;
@@ -76,8 +76,8 @@ namespace Capstone.Controllers
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var pickupDog = db.MyPickups.Where(m => m.EmployeeId == employeeIds).OrderByDescending(m => m.Id).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == pickupDog.DogId).Select(d => d.CustomerId).FirstOrDefault();
             var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
             var customerphone = customer.PhoneNumber.ToString();
             var text = textMessage.Message;
@@ -101,8 +101,8 @@ namespace Capstone.Controllers
             var currentUsername = User.Identity.Name;
             var currentUser = db.Users.Where(m => m.UserName == currentUsername).Select(m => m.Id).FirstOrDefault();
             var employeeIds = db.Employees.Where(m => m.ApplicationUserId == currentUser).Select(m => m.Id).FirstOrDefault();
-            var dogId = db.MyPickups.Where(m => m.EmployeeId == employeeIds).Select(m => m.DogId).FirstOrDefault();
-            var dogOwner = db.Dogs.Where(d => d.Id == dogId).Select(d => d.CustomerId).FirstOrDefault();
+            var pickupDog = db.MyPickups.Where(m => m.EmployeeId == employeeIds).OrderByDescending(m => m.Id).FirstOrDefault();
+            var dogOwner = db.Dogs.Where(d => d.Id == pickupDog.DogId).Select(d => d.CustomerId).FirstOrDefault();
             var customer = db.Customers.Where(c => c.Id == dogOwner).FirstOrDefault();
             var customerphone = customer.PhoneNumber.ToString();
             var text = textMessage.Message;
